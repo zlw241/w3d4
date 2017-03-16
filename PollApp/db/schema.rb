@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316160727) do
+ActiveRecord::Schema.define(version: 20170316173911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170316160727) do
     t.integer  "question_id",   null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["question_id"], name: "index_answer_choices_on_question_id", using: :btree
   end
 
   create_table "polls", force: :cascade do |t|
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170316160727) do
     t.integer  "author_id",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_polls_on_author_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -34,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170316160727) do
     t.integer  "poll_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["poll_id"], name: "index_questions_on_poll_id", using: :btree
   end
 
   create_table "responses", force: :cascade do |t|
@@ -41,12 +44,15 @@ ActiveRecord::Schema.define(version: 20170316160727) do
     t.integer  "answer_choice_id", null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["answer_choice_id"], name: "index_responses_on_answer_choice_id", using: :btree
+    t.index ["user_id"], name: "index_responses_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
   end
 
 end
