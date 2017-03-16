@@ -47,11 +47,8 @@ def starring(whazzername)
   # A name is like whazzername if the actor's name contains all of the letters in whazzername,
   # ignoring case, in order.
   # ex. "Sylvester Stallone" is like "sylvester" and "lester stone" but not like "stallone sylvester" or "zylvester ztallone"
-  regex_whazzername = whazzername.chars.map { |c| "#{c}?" }.join
-  Movie.joins(:actors)
-    .where('actors.name ~* ?', regex_whazzername)
-    .order("movies.title")
-    .select("movies.*")
+  regex_whazzername = '%' + whazzername.chars.map { |c| "#{c}%" }.join
+  Movie.joins(:actors).where("actors.name ILIKE ?", regex_whazzername).order("movies.title").select("movies.*")
 
 end
 
